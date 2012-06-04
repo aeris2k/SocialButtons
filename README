@@ -1,0 +1,33 @@
+All credits go to: https://github.com/nicoladj77/SocialPlugins
+
+This is a set of classes to add Social Plugins (Facebook like, Twitter, G-Plus) to your pages. 
+Every plugin extends the class SocialButtonAbstract and i have an helper class that renders all the buttons. 
+
+This is the basic usage with the helper class
+
+//Create the instance of the helper classand set some options
+$socialPlugins = new SocialPluginsHelper(array(
+        SocialPluginsHelper::HTML_AFTER_BUTTONS => '<div class="clear"></div>',
+        SocialPluginsHelper::HTML_BEFORE_BUTTONS => '<div class="clear"></div>',
+        SocialPluginsHelper::STYLE_OF_WRAPPER => 'margin-top:5px;',
+        SocialPluginsHelper::CUSTOM_PLUGIN_STYLE => array(
+                "TwitterButton" => "width:69px;",
+                "FacebookLike" => "width:146px;")
+)
+);
+
+//Add the buttons to the class
+$socialPlugins->add(PluginFactory::create("FacebookLike", array(FacebookLike::FB_WIDTH => "146")));
+$socialPlugins->add(PluginFactory::create("TwitterButton"));
+$socialPlugins->add(PluginFactory::create("Gplus")); 
+
+// render the javascripts for the buttons 
+$socialPlugins->renderAllScripts();
+
+/* Render the buttons (you can pass some options to the class to use in the buttons, the main use case
+ * for this is when you have multiple buttons on the same page and you have to pass a different href
+ * To like */
+$socialPlugins->renderAllButtons(array("FacebookLike" => array(FacebookLike::FB_HREF => $url)));
+
+Of course you can also use the single classes withouth the helper class
+
